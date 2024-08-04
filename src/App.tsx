@@ -1,9 +1,10 @@
 import "./App.css";
+import Router from "./Router";
 
 function App() {
   return (
     <>
-      <div className="font-pretendard text-purple text-title1">asdf</div>
+      <Router />
     </>
   );
 }
