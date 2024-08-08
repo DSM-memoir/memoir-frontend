@@ -10,9 +10,9 @@ const Detail = () => {
   return (
     <main className="flex flex-col w-full h-full items-center">
       <div className="w-full pt-[50px] pl-[100px] flex justify-between items-center">
-        <div className="flex gap-[10px]">
+        <div className="flex gap-[10px] items-center">
           <Logo100 />
-          <div className="font-pretendard text-title1">메뫌</div>
+          <div className="font-pretendard text-title2">메뫌</div>
         </div>
       </div>
       <section className="pb-[60px]">
@@ -32,13 +32,13 @@ const Detail = () => {
                     수정
                   </div>
                   <hr />
-                  <div className="flex justify-end pr-[10px] hover:cursor-pointer">
+                  <div className="flex justify-end pr-[10px] hover:cursor-pointer text-red">
                     삭제
                   </div>
                 </div>
               )}
             </div>
-            <span className="text-body1 ml-auto font-pretendard">
+            <span className="text-body3 ml-auto font-pretendard">
               2024년 6월 3일
             </span>
           </title>

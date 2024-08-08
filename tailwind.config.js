@@ -18,6 +18,7 @@ export default {
     colors: {
       purple: "#7f57d2",
       white: "#f4f5f9",
+      red: "#ff0000",
     },
   },
   plugins: [],
