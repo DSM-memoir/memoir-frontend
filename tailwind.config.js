@@ -3,6 +3,11 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {},
+    screen: {
+      sm: "640px",
+      md: "768px",
+      lg: "1300px",
+    },
     fontSize: {
       title1: 64,
       title2: 52,
@@ -27,8 +32,8 @@ export default {
       button: 175,
     },
     height: {
-      input: 54
-    }
+      input: 54,
+    },
   },
   plugins: [],
   mode: "jit",
