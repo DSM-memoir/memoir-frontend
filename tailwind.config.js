@@ -18,8 +18,9 @@ export default {
     colors: {
       purple: "#7f57d2",
       white: "#f4f5f9",
+      red: "#ff0000",
       activePurple: "#6E42C9",
-      activeBackground: "#F2F0F0"
+      activeBackground: "#F2F0F0",
     },
     width: {
       input: 360,
@@ -30,4 +31,5 @@ export default {
     }
   },
   plugins: [],
+  mode: "jit",
 };

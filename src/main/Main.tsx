@@ -3,7 +3,7 @@ import Section from "../components/section";
 
 const Main = () => {
   return (
-    <main className="bg-white flex-col gap-[50px] px-[50px] py-[100px] w-[100vw] h-full min-h-[100vh]">
+    <main className="bg-white flex flex-col gap-[50px] px-[50px] py-[100px] w-full h-full overflow-x-hidden">
       <div className="flex justify-between items-center">
         <div className="flex gap-[10px]">
           <Logo100 />
@@ -13,7 +13,7 @@ const Main = () => {
           글 쓰러 가기
         </button>
       </div>
-      <section className="grid grid-cols-4">
+      <section className="flex flex-wrap gap-16">
         <Section />
         <Section />
         <Section />
