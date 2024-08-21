@@ -9,7 +9,7 @@ const Detail = () => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   return (
     <main className="flex flex-col w-full h-full items-center">
-      <div className="w-full pt-[50px] pl-[100px] flex justify-between items-center">
+      <div className="w-full pt-[50px] pl-[100px] flex justify-between items-center w-[100%]">
         <div className="flex gap-[10px] items-center">
           <Logo100 />
           <div className="font-pretendard text-title2">메뫌</div>
