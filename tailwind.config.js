@@ -1,8 +1,31 @@
+import { keyframes } from "styled-components";
+
 // tailwind.config.js
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      boxShadow: {
+        custom: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+      },
+      spacing: {
+        input: 360,
+        button: 175,
+      },
+      keyframes: {
+        scaleUp: {
+          "0%": { transform: "scale(0.3)" },
+          "75%": { transform: "scale(1.3)" },
+          "100%": { transform: "scale(1)" },
+        },
+      },
+      animation: {
+        scaleUp: "scaleUp 0.2s ease-in",
+      },
+      height: {
+        input: 54,
+      },
+    },
     screen: {
       sm: "640px",
       md: "768px",
@@ -21,20 +44,15 @@ export default {
       pretendard: ["Pretendard-Bold"],
     },
     colors: {
-      purple: "#7f57d2",
+      purple: "#DEA8FF",
       white: "#f4f5f9",
       red: "#ff0000",
       activePurple: "#6E42C9",
       activeBackground: "#F2F0F0",
-    },
-    width: {
-      input: 360,
-      button: 175,
-    },
-    height: {
-      input: 54,
+      gray: "#a6a6a6",
+      black: "#000",
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
   mode: "jit",
 };
