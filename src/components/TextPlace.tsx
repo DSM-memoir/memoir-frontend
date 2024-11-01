@@ -37,7 +37,7 @@ const TextPlace = ({ state, content }: Props) => {
             className="p-1 rounded-lg"
           />
           <textarea
-            className="p-3.5 rounded-lg text-body2 text-wrap resize-none border-[1px]"
+            className="p-3.5 rounded-lg text-body2 text-wrap resize-none border"
             rows={10}
             onChange={(e) => handleChange(e, setText)}
             value={text}
