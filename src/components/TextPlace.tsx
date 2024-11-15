@@ -19,7 +19,9 @@ const TextPlace = ({ state, content }: Props) => {
   );
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
+    e:
+      | React.ChangeEvent<HTMLTextAreaElement>
+      | React.ChangeEvent<HTMLInputElement>,
     fu: React.Dispatch<React.SetStateAction<string>>
   ) => {
     fu(e.target.value);
@@ -28,16 +30,25 @@ const TextPlace = ({ state, content }: Props) => {
   return (
     <div className="flex flex-col">
       {state === "edit" && (
-        <>
-          <input onChange={(e) => handleChange(e, setTitle)}>{title}</input>
-          <input onChange={(e) => handleChange(e, setText)}>{text}</input>
-        </>
+        <div className="flex flex-col gap-[30px] text-body1">
+          <input
+            onChange={(e) => handleChange(e, setTitle)}
+            value={title}
+            className="p-1 rounded-lg"
+          />
+          <textarea
+            className="p-3.5 rounded-lg text-body2 text-wrap resize-none border"
+            rows={10}
+            onChange={(e) => handleChange(e, setText)}
+            value={text}
+          />
+        </div>
       )}
       {state === "view" && (
-        <>
+        <div className="flex flex-col gap-[30px] text-body1">
           <h1>{title}</h1>
           <span className="text-body2">{text}</span>
-        </>
+        </div>
       )}
     </div>
   );
