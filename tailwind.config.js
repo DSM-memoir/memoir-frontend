@@ -44,13 +44,24 @@ export default {
       pretendard: ["Pretendard-Bold"],
     },
     colors: {
-      purple: "#DEA8FF",
+      purple: "#7f57d2",
+      lightPurple: "#DEA8FF",
       white: "#f4f5f9",
       red: "#ff0000",
       activePurple: "#6E42C9",
       activeBackground: "#F2F0F0",
       gray: "#a6a6a6",
       black: "#000",
+    },
+    width: {
+      input: 360,
+      button: 175,
+    },
+    height: {
+      input: 54,
+    },
+    boxShadow: {
+      innerShadow: "inset 0 0 10px rgba(0,0,0,0.25)",
     },
   },
   plugins: [require("@tailwindcss/typography")],
