@@ -10,7 +10,11 @@ export interface Memoirs {
   postDate: string;
 }
 
+export interface AllMemoirsT {
+  memoirs: Memoirs[];
+}
+
 export const getAllmemoirs = async (order: "LIKE" | "RECENT") => {
-  const { data } = await instance.get<Array<Memoirs>>(`memoirs?sort=${order}`);
+  const { data } = await instance.get<AllMemoirsT>(`memoir?sort=${order}`);
   return data;
 };

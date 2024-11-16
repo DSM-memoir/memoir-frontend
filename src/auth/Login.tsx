@@ -28,7 +28,6 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   console.log(accountId, password);
-  
 
   const handlePasswordType = () => {
     setShowPswd(() => {
@@ -41,12 +40,14 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post(`${BASE_URL}/user/login`, {
-        accountId,
-        password,
-      }).then((res) => {
-        Cookie.set("accessToken", res.data);
-      })
+      const response = await axios
+        .post(`${BASE_URL}/user/login`, {
+          accountId,
+          password,
+        })
+        .then((res) => {
+          Cookie.set("accessToken", res.data.token);
+        });
       navigate("/");
       return response;
     } catch (err) {

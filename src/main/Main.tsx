@@ -1,14 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Section from "../components/section";
 import { getAllmemoirs } from "../api/main";
 import { useQuery } from "@tanstack/react-query";
+import { Cookie } from "../utils/cookie";
+import { useNavigate } from "react-router-dom";
 
 const Main = () => {
   const [orderBy, setOrderBy] = useState<"RECENT" | "LIKE">("RECENT");
-  const { data: AllMemoirs } = useQuery({
+  const { data: allMemoirs } = useQuery({
     queryKey: ["AllMemoirs", orderBy],
     queryFn: () => getAllmemoirs(orderBy),
   });
+  const navigate = useNavigate();
+
+  const isLogin = Cookie.get("accessToken");
+  useEffect(() => {
+    if (!isLogin) {
+      navigate("/login");
+    }
+  });
+
   return (
     <main className="bg-white flex flex-col gap-[30px] px-[50px] py-[10px] w-full h-full overflow-x-hidden font-pretendard min-h-[100vh]">
       <div className="flex justify-between items-center">
@@ -45,7 +56,7 @@ const Main = () => {
         </p>
       </div>
       <section className="flex flex-wrap gap-16">
-        {AllMemoirs?.map((memoir) => (
+        {allMemoirs?.memoirs?.map((memoir) => (
           <Section data={memoir} key={memoir.id} />
         ))}
       </section>
