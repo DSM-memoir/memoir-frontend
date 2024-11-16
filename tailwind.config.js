@@ -25,6 +25,13 @@ export default {
       height: {
         input: 54,
       },
+      width: {
+        input: 360,
+        button: 175,
+      },
+      boxShadow: {
+        innerShadow: "inset 0 0 10px rgba(0,0,0,0.25)",
+      },
     },
     screen: {
       sm: "640px",
@@ -52,16 +59,6 @@ export default {
       activeBackground: "#F2F0F0",
       gray: "#a6a6a6",
       black: "#000",
-    },
-    width: {
-      input: 360,
-      button: 175,
-    },
-    height: {
-      input: 54,
-    },
-    boxShadow: {
-      innerShadow: "inset 0 0 10px rgba(0,0,0,0.25)",
     },
   },
   plugins: [require("@tailwindcss/typography")],

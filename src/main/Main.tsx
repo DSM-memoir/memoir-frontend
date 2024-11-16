@@ -1,10 +1,16 @@
 import { useState } from "react";
 import Section from "../components/section";
+import { getAllmemoirs } from "../api/main";
+import { useQuery } from "@tanstack/react-query";
 
 const Main = () => {
-  const [orderBy, setOrderBy] = useState<"recently" | "mostLike">("recently");
+  const [orderBy, setOrderBy] = useState<"RECENT" | "LIKE">("RECENT");
+  const { data: AllMemoirs } = useQuery({
+    queryKey: ["AllMemoirs", orderBy],
+    queryFn: () => getAllmemoirs(orderBy),
+  });
   return (
-    <main className="bg-white flex flex-col gap-[30px] px-[50px] py-[10px] w-full h-full overflow-x-hidden font-pretendard">
+    <main className="bg-white flex flex-col gap-[30px] px-[50px] py-[10px] w-full h-full overflow-x-hidden font-pretendard min-h-[100vh]">
       <div className="flex justify-between items-center">
         <h1 className="text-body1 font-bold">메뫌</h1>
         <div className="flex gap-[10px]">
@@ -23,34 +29,25 @@ const Main = () => {
       <div className="flex gap-[30px] text-body1">
         <p
           className={`${
-            orderBy === "recently" ? "text-black" : "text-gray"
+            orderBy === "RECENT" ? "text-black" : "text-gray"
           } cursor-pointer`}
-          onClick={() => setOrderBy("recently")}
+          onClick={() => setOrderBy("RECENT")}
         >
           최근 올라온 메뫌
         </p>
         <p
           className={`${
-            orderBy === "mostLike" ? "text-black" : "text-gray"
+            orderBy === "LIKE" ? "text-black" : "text-gray"
           } cursor-pointer`}
-          onClick={() => setOrderBy("mostLike")}
+          onClick={() => setOrderBy("LIKE")}
         >
           많은 사랑을 받은 메뫌
         </p>
       </div>
       <section className="flex flex-wrap gap-16">
-        <Section id={"asdf"} />
-        <Section id={"asdf"} />
-        <Section id={"asdf"} />
-        <Section id={"asdf"} />
-        <Section id={"asdf"} />
-        <Section id={"asdf"} />
-        <Section id={"asdf"} />
-        <Section id={"asdf"} />
-        <Section id={"asdf"} />
-        <Section id={"asdf"} />
-        <Section id={"asdf"} />
-        <Section id={"asdf"} />
+        {AllMemoirs?.map((memoir) => (
+          <Section data={memoir} key={memoir.id} />
+        ))}
       </section>
     </main>
   );
