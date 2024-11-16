@@ -17,4 +17,13 @@ instance.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+instance.interceptors.response.use(
+  (res) => res,
+  (error) => {
+    if (error.response.status === 401) {
+      window.location.href = "/login";
+    }
+  }
+);
+
 export default instance;
