@@ -5,13 +5,20 @@ import Heart from "../assets/heart";
 import OutlineHeart from "../assets/outlineHeart";
 import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getDetail, patchLikes, patchPublished } from "../api/details";
+import {
+  deleteMemoirFn,
+  getDetail,
+  patchLikes,
+  patchPublished,
+} from "../api/details";
+import { useNavigate } from "react-router-dom";
 
 const Detail = () => {
   const { id } = useParams();
-  const isMine = false;
+  const isMine = true;
   const [isHeart, setIsHeart] = useState(false);
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const { data } = useQuery({
     queryKey: ["detail", id],
@@ -37,6 +44,16 @@ const Detail = () => {
     },
   });
 
+  const { mutate: deleteMemoir } = useMutation({
+    mutationKey: ["delete", id],
+    mutationFn: () => deleteMemoirFn(id as string),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["AllMemoirs"],
+      });
+    },
+  });
+
   useEffect(() => {
     if (data?.liked) {
       setIsHeart(true);
@@ -50,7 +67,10 @@ const Detail = () => {
           <a href="/">메뫌</a>
         </h1>
         <div className="flex gap-[10px]">
-          <button className="flex items-center justify-center py-3 font-bold text-white rounded-full px-7 bg-purple">
+          <button
+            className="flex items-center justify-center py-3 font-bold text-white rounded-full px-7 bg-purple"
+            onClick={() => navigate("/write")}
+          >
             새 회고록 작성
           </button>
           <button className="flex items-center justify-center p-3 font-bold border rounded-full border-purple">
@@ -77,7 +97,11 @@ const Detail = () => {
                   onclick={() => patchPublish()}
                 />
                 <Button label="수정" className="text-black bg-white border" />
-                <Button label="삭제" className="text-white bg-red" />
+                <Button
+                  label="삭제"
+                  className="text-white bg-red"
+                  onclick={() => deleteMemoir()}
+                />
               </div>
             ) : (
               <div className="flex items-end gap-[5px]">

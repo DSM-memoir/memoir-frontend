@@ -22,17 +22,17 @@ const Main = () => {
 
   return (
     <main className="bg-white flex flex-col gap-[30px] px-[50px] py-[10px] w-full h-full overflow-x-hidden font-pretendard min-h-[100vh]">
-      <div className="flex justify-between items-center">
-        <h1 className="text-body1 font-bold">메뫌</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="font-bold text-body1">메뫌</h1>
         <div className="flex gap-[10px]">
           <input
             placeholder="검색"
             className="p-3 pr-5 text-right rounded-full border-purple border shadow-custom outline-none min-w-[264px]"
           />
-          <button className="flex justify-center items-center px-7 py-3 bg-purple rounded-full font-bold text-white">
+          <button className="flex items-center justify-center py-3 font-bold text-white rounded-full px-7 bg-purple" onClick={() => navigate('/write')}>
             새 회고록 작성
           </button>
-          <button className="flex justify-center items-center p-3 border-purple border rounded-full font-bold">
+          <button className="flex items-center justify-center p-3 font-bold border rounded-full border-purple">
             마이페이지
           </button>
         </div>
