@@ -27,3 +27,8 @@ export const patchPublished = async (id: string) => {
   const { data } = await instance.patch(`memoir/published/${id}`);
   return data;
 };
+
+export const deleteMemoirFn = async (id: string) => {
+  const { data } = await instance.delete(`memoir/${id}`);
+  return data;
+};
