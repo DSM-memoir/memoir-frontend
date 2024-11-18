@@ -12,10 +12,12 @@ import {
   patchPublished,
 } from "../api/details";
 import { useNavigate } from "react-router-dom";
+import { getMypage } from "../api/user";
 
 const Detail = () => {
   const { id } = useParams();
-  const isMine = true;
+  const [isMine, setIsMine] = useState(false);
+
   const [isHeart, setIsHeart] = useState(false);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -23,6 +25,11 @@ const Detail = () => {
   const { data } = useQuery({
     queryKey: ["detail", id],
     queryFn: () => getDetail(id as string),
+  });
+
+  const { data: mypage } = useQuery({
+    queryKey: ["name"],
+    queryFn: () => getMypage(),
   });
 
   const { mutate: patchLike } = useMutation({
@@ -57,6 +64,17 @@ const Detail = () => {
   useEffect(() => {
     if (data?.liked) {
       setIsHeart(true);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    console.log(data?.author);
+    console.log(mypage?.nickname);
+    queryClient.invalidateQueries({
+      queryKey: ["detail"],
+    });
+    if (mypage && data && mypage?.nickname === data?.author) {
+      setIsMine(true);
     }
   }, [data]);
 
