@@ -29,10 +29,16 @@ const Main = () => {
             placeholder="검색"
             className="p-3 pr-5 text-right rounded-full border-purple border shadow-custom outline-none min-w-[264px]"
           />
-          <button className="flex items-center justify-center py-3 font-bold text-white rounded-full px-7 bg-purple" onClick={() => navigate('/write')}>
+          <button
+            className="flex items-center justify-center py-3 font-bold text-white rounded-full px-7 bg-purple"
+            onClick={() => navigate("/write")}
+          >
             새 회고록 작성
           </button>
-          <button className="flex items-center justify-center p-3 font-bold border rounded-full border-purple">
+          <button
+            className="flex items-center justify-center p-3 font-bold border rounded-full border-purple"
+            onClick={() => navigate("/mypage")}
+          >
             마이페이지
           </button>
         </div>
