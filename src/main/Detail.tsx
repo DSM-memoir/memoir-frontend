@@ -58,6 +58,7 @@ const Detail = () => {
       queryClient.invalidateQueries({
         queryKey: ["AllMemoirs"],
       });
+      navigate("/");
     },
   });
 
@@ -76,7 +77,7 @@ const Detail = () => {
     if (mypage && data && mypage?.nickname === data?.author) {
       setIsMine(true);
     }
-  }, [data]);
+  }, [data, mypage]);
 
   return (
     <main className="bg-white flex flex-col gap-[30px] px-[50px] py-[10px] w-full h-full overflow-x-hidden font-pretendard items-center min-h-[100vh]">
@@ -114,7 +115,11 @@ const Detail = () => {
                   className="text-white bg-purple"
                   onclick={() => patchPublish()}
                 />
-                <Button label="수정" className="text-black bg-white border" />
+                <Button
+                  label="수정"
+                  className="text-black bg-white border"
+                  onclick={() => navigate(`edit`)}
+                />
                 <Button
                   label="삭제"
                   className="text-white bg-red"

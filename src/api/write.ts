@@ -26,3 +26,28 @@ export const postMemoir = async (memoir: Memoir) => {
   });
   return data;
 };
+
+export const editMemoir = async ({
+  id,
+  form,
+}: {
+  id: string;
+  form: { title: string; content: string; feels: string; image: File | null };
+}) => {
+  const formData = new FormData();
+  formData.append(
+    "data",
+    new Blob([JSON.stringify({ ...form })], {
+      type: "application/json",
+    })
+  );
+  if (form.image) {
+    formData.append("image", form.image);
+  }
+  const { data } = await instance.patch(`/memoir/${id}`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return data;
+};

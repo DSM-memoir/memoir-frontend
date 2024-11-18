@@ -1,8 +1,11 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import breaks from "remark-breaks";
-import { useMutation } from "@tanstack/react-query";
-import { postMemoir } from "../api/write";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { editMemoir, postMemoir } from "../api/write";
+import { getDetail } from "../api/details";
+import { useNavigate, useParams } from "react-router-dom";
+import { urlToBlob } from "../utils/urlToBlob";
 
 interface FormType {
   title: string;
@@ -45,10 +48,39 @@ const Edit = () => {
   const [activeTab, setActiveTab] = useState<"write" | "preview">("write");
   const [feelingTab, setFeelingTab] = useState<"write" | "preview">("write");
   const mode = window.location.pathname === "/write" ? "write" : "edit";
+  const { id } = useParams();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const { data: formData } = useQuery({
+    queryKey: ["getForm"],
+    queryFn: () => getDetail(id as string),
+  });
 
   const { mutate: post } = useMutation({
     mutationKey: ["posting"],
     mutationFn: () => postMemoir(form),
+    onSuccess: () => navigate("/"),
+  });
+
+  const { mutate: edit } = useMutation({
+    mutationKey: ["edit"],
+    mutationFn: () =>
+      editMemoir({
+        form: {
+          title: form.title,
+          content: form.content,
+          feels: form.feels,
+          image: form.image,
+        },
+        id: id as string,
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["detail"],
+      });
+      navigate("/");
+    },
   });
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,14 +100,32 @@ const Edit = () => {
     e.preventDefault();
     if (mode === "write") {
       post();
+    } else if (mode === "edit") {
+      edit();
     }
     console.log("Form submitted:", form);
   };
 
+  useEffect(() => {
+    if (id && formData) {
+      setForm({
+        title: formData.title,
+        image: null,
+        content: formData.content,
+        feels: formData.feels,
+        published: formData.published,
+      });
+      urlToBlob(formData.image_url).then((file) =>
+        setForm((form) => ({ ...form, image: file }))
+      );
+      setImagePreview(formData.image_url);
+    }
+  }, [formData]);
+
   return (
     <main className="flex flex-col items-center w-full min-h-screen gap-8 px-12 py-4 bg-white font-pretendard">
       <div className="flex items-center justify-between w-full max-w-6xl">
-        <h1 className="text-body1 font-bold">
+        <h1 className="font-bold text-body1">
           <a href="/" className="transition-colors hover:text-purple">
             메뫌
           </a>
