@@ -14,7 +14,7 @@ export interface AllMemoirsT {
   memoirs: Memoirs[];
 }
 
-export const getAllmemoirs = async (order: "LIKE" | "RECENT") => {
+export const getAllmemoirs = async (order: "LIKE" | "RECENT" | "MY") => {
   const { data } = await instance.get<AllMemoirsT>(`memoir?sort=${order}`);
   return data;
 };
