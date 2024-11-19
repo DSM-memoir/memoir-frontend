@@ -256,10 +256,7 @@ const Edit = () => {
           )}
         </div>
 
-        <button
-          type="submit"
-          className="w-full py-4 font-bold text-white transition-colors rounded-lg bg-purple hover:bg-purple/90"
-        >
+        <button className="w-full py-4 font-bold text-white transition-colors rounded-lg bg-purple hover:bg-purple/90">
           저장하기
         </button>
       </form>
