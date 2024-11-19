@@ -23,6 +23,7 @@ interface TabProps {
 
 const Tab = ({ isActive, onClick, children }: TabProps) => (
   <button
+    type="button"
     onClick={onClick}
     className={`px-4 py-2 font-medium rounded-t-lg ${
       isActive
@@ -243,13 +244,13 @@ const Edit = () => {
             <textarea
               value={form.feels}
               onChange={(e) => setForm({ ...form, feels: e.target.value })}
-              placeholder="감정을 입력하세요... (마크다운 문법을 지원합니다)"
+              placeholder="느낀 점을 입력하세요... (마크다운 문법을 지원합니다)"
               className="w-full min-h-[100px] p-4 border rounded-lg resize-none focus:outline-none focus:border-purple transition-colors font-normal"
             />
           ) : (
             <div className="w-full min-h-[100px] p-4 border rounded-lg prose max-w-none whitespace-pre-wrap">
               <ReactMarkdown remarkPlugins={[breaks]}>
-                {form.feels || "감정이 입력되지 않았습니다."}
+                {form.feels || "느낀 점이 입력되지 않았습니다."}
               </ReactMarkdown>
             </div>
           )}

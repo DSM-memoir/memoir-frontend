@@ -13,6 +13,8 @@ import {
 } from "../api/details";
 import { useNavigate } from "react-router-dom";
 import { getMypage } from "../api/user";
+import ReactMarkdown from "react-markdown";
+import breaks from "remark-breaks";
 
 const Detail = () => {
   const { id } = useParams();
@@ -145,11 +147,13 @@ const Detail = () => {
         {data?.image_url ? <img src={data?.image_url} /> : <BigImgSkeleton />}
         <div className="flex flex-col w-full">
           <p className="text-body1">내용</p>
-          <span className="text-body2">{data?.content}</span>
+          <ReactMarkdown remarkPlugins={[breaks]}>
+            {data?.content}
+          </ReactMarkdown>
         </div>
         <div className="flex flex-col w-full">
           <p className="text-body1">느낀점</p>
-          <span className="text-body2">{data?.feels}</span>
+          <ReactMarkdown remarkPlugins={[breaks]}>{data?.feels}</ReactMarkdown>
         </div>
         {!isMine && (
           <button
