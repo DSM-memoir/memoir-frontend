@@ -93,7 +93,7 @@ const Detail = () => {
           >
             새 회고록 작성
           </button>
-          <button className="flex items-center justify-center p-3 font-bold border rounded-full border-purple">
+          <button className="flex items-center justify-center p-3 font-bold border rounded-full border-purple" onClick={() => navigate('/mypage')}>
             마이페이지
           </button>
         </div>
