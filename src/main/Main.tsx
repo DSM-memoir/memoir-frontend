@@ -25,10 +25,6 @@ const Main = () => {
       <div className="flex items-center justify-between">
         <h1 className="font-bold text-body1">메뫌</h1>
         <div className="flex gap-[10px]">
-          <input
-            placeholder="검색"
-            className="p-3 pr-5 text-right rounded-full border-purple border shadow-custom outline-none min-w-[264px]"
-          />
           <button
             className="flex items-center justify-center py-3 font-bold text-white rounded-full px-7 bg-purple"
             onClick={() => navigate("/write")}
