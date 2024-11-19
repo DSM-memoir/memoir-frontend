@@ -80,66 +80,6 @@ const Detail = () => {
     }
   }, [data, mypage]);
 
-  // Markdown 스타일 정의
-  const markdownStyles = {
-    content: {
-      "& h1": {
-        fontSize: "2em",
-        fontWeight: "bold",
-        margin: "1em 0",
-      },
-      "& h2": {
-        fontSize: "1.5em",
-        fontWeight: "bold",
-        margin: "0.83em 0",
-      },
-      "& h3": {
-        fontSize: "1.17em",
-        fontWeight: "bold",
-        margin: "1em 0",
-      },
-      "& p": {
-        margin: "1em 0",
-        lineHeight: "1.6",
-      },
-      "& ul": {
-        listStyle: "disc",
-        marginLeft: "2em",
-        margin: "1em 0",
-      },
-      "& ol": {
-        listStyle: "decimal",
-        marginLeft: "2em",
-        margin: "1em 0",
-      },
-      "& li": {
-        margin: "0.5em 0",
-      },
-      "& a": {
-        color: "#0066cc",
-        textDecoration: "underline",
-      },
-      "& blockquote": {
-        borderLeft: "4px solid #ddd",
-        margin: "1em 0",
-        padding: "0 1em",
-      },
-      "& code": {
-        backgroundColor: "#f5f5f5",
-        padding: "0.2em 0.4em",
-        borderRadius: "3px",
-        fontFamily: "monospace",
-      },
-      "& pre": {
-        backgroundColor: "#f5f5f5",
-        padding: "1em",
-        borderRadius: "5px",
-        overflow: "auto",
-        margin: "1em 0",
-      },
-    },
-  };
-
   return (
     <main className="bg-white flex flex-col gap-[30px] px-[50px] py-[10px] w-full h-full overflow-x-hidden font-pretendard items-center min-h-[100vh]">
       <div className="flex items-center justify-between min-w-full">
