@@ -7,7 +7,7 @@ interface PropsType {
 
 const Section = ({ data }: PropsType) => {
   return (
-    <a href={`/detail/${data.id}`}>
+    <a href={`/detail/${data.id}`} className="w-[400px] h-[200px]">
       <div className="flex-col">
         {data.imageUrl ? (
           <img

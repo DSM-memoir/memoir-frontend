@@ -32,21 +32,22 @@ export default {
       boxShadow: {
         innerShadow: "inset 0 0 10px rgba(0,0,0,0.25)",
       },
+      fontSize: {
+        title1: 64,
+        title2: 52,
+        title3: 48,
+        body1: 32,
+        body2: 20,
+        body3: 16,
+        tiny1: 12,
+      },
     },
     screen: {
       sm: "640px",
       md: "768px",
       lg: "1300px",
     },
-    fontSize: {
-      title1: 64,
-      title2: 52,
-      title3: 48,
-      body1: 32,
-      body2: 20,
-      body3: 16,
-      tiny1: 12,
-    },
+
     fontFamily: {
       pretendard: ["Pretendard-Bold"],
     },

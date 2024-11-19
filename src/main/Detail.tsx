@@ -19,7 +19,6 @@ import breaks from "remark-breaks";
 const Detail = () => {
   const { id } = useParams();
   const [isMine, setIsMine] = useState(false);
-
   const [isHeart, setIsHeart] = useState(false);
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -80,6 +79,66 @@ const Detail = () => {
       setIsMine(true);
     }
   }, [data, mypage]);
+
+  // Markdown 스타일 정의
+  const markdownStyles = {
+    content: {
+      "& h1": {
+        fontSize: "2em",
+        fontWeight: "bold",
+        margin: "1em 0",
+      },
+      "& h2": {
+        fontSize: "1.5em",
+        fontWeight: "bold",
+        margin: "0.83em 0",
+      },
+      "& h3": {
+        fontSize: "1.17em",
+        fontWeight: "bold",
+        margin: "1em 0",
+      },
+      "& p": {
+        margin: "1em 0",
+        lineHeight: "1.6",
+      },
+      "& ul": {
+        listStyle: "disc",
+        marginLeft: "2em",
+        margin: "1em 0",
+      },
+      "& ol": {
+        listStyle: "decimal",
+        marginLeft: "2em",
+        margin: "1em 0",
+      },
+      "& li": {
+        margin: "0.5em 0",
+      },
+      "& a": {
+        color: "#0066cc",
+        textDecoration: "underline",
+      },
+      "& blockquote": {
+        borderLeft: "4px solid #ddd",
+        margin: "1em 0",
+        padding: "0 1em",
+      },
+      "& code": {
+        backgroundColor: "#f5f5f5",
+        padding: "0.2em 0.4em",
+        borderRadius: "3px",
+        fontFamily: "monospace",
+      },
+      "& pre": {
+        backgroundColor: "#f5f5f5",
+        padding: "1em",
+        borderRadius: "5px",
+        overflow: "auto",
+        margin: "1em 0",
+      },
+    },
+  };
 
   return (
     <main className="bg-white flex flex-col gap-[30px] px-[50px] py-[10px] w-full h-full overflow-x-hidden font-pretendard items-center min-h-[100vh]">
@@ -147,13 +206,107 @@ const Detail = () => {
         {data?.image_url ? <img src={data?.image_url} /> : <BigImgSkeleton />}
         <div className="flex flex-col w-full">
           <p className="text-body1">내용</p>
-          <ReactMarkdown remarkPlugins={[breaks]}>
-            {data?.content}
-          </ReactMarkdown>
+          <div>
+            <ReactMarkdown
+              remarkPlugins={[breaks]}
+              components={{
+                h1: ({ node, ...props }) => (
+                  <h1 className="my-4 text-2xl font-bold" {...props} />
+                ),
+                h2: ({ node, ...props }) => (
+                  <h2 className="my-3 text-xl font-bold" {...props} />
+                ),
+                h3: ({ node, ...props }) => (
+                  <h3 className="my-2 text-lg font-bold" {...props} />
+                ),
+                p: ({ node, ...props }) => (
+                  <p className="my-4 leading-relaxed" {...props} />
+                ),
+                ul: ({ node, ...props }) => (
+                  <ul className="my-4 ml-8 list-disc" {...props} />
+                ),
+                ol: ({ node, ...props }) => (
+                  <ol className="my-4 ml-8 list-decimal" {...props} />
+                ),
+                li: ({ node, ...props }) => <li className="my-2" {...props} />,
+                a: ({ node, ...props }) => (
+                  <a className="text-blue-600 underline" {...props} />
+                ),
+                blockquote: ({ node, ...props }) => (
+                  <blockquote
+                    className="pl-4 my-4 border-l-4 border-gray-300"
+                    {...props}
+                  />
+                ),
+                code: ({ node, inline, ...props }) =>
+                  inline ? (
+                    <code
+                      className="px-2 py-1 bg-gray-100 rounded"
+                      {...props}
+                    />
+                  ) : (
+                    <code
+                      className="block p-4 my-4 bg-gray-100 rounded"
+                      {...props}
+                    />
+                  ),
+              }}
+            >
+              {data?.content}
+            </ReactMarkdown>
+          </div>
         </div>
         <div className="flex flex-col w-full">
           <p className="text-body1">느낀점</p>
-          <ReactMarkdown remarkPlugins={[breaks]}>{data?.feels}</ReactMarkdown>
+          <div>
+            <ReactMarkdown
+              remarkPlugins={[breaks]}
+              components={{
+                h1: ({ node, ...props }) => (
+                  <h1 className="my-4 text-2xl font-bold" {...props} />
+                ),
+                h2: ({ node, ...props }) => (
+                  <h2 className="my-3 text-xl font-bold" {...props} />
+                ),
+                h3: ({ node, ...props }) => (
+                  <h3 className="my-2 text-lg font-bold" {...props} />
+                ),
+                p: ({ node, ...props }) => (
+                  <p className="my-4 leading-relaxed" {...props} />
+                ),
+                ul: ({ node, ...props }) => (
+                  <ul className="my-4 ml-8 list-disc" {...props} />
+                ),
+                ol: ({ node, ...props }) => (
+                  <ol className="my-4 ml-8 list-decimal" {...props} />
+                ),
+                li: ({ node, ...props }) => <li className="my-2" {...props} />,
+                a: ({ node, ...props }) => (
+                  <a className="text-blue-600 underline" {...props} />
+                ),
+                blockquote: ({ node, ...props }) => (
+                  <blockquote
+                    className="pl-4 my-4 border-l-4 border-gray-300"
+                    {...props}
+                  />
+                ),
+                code: ({ node, inline, ...props }) =>
+                  inline ? (
+                    <code
+                      className="px-2 py-1 bg-gray-100 rounded"
+                      {...props}
+                    />
+                  ) : (
+                    <code
+                      className="block p-4 my-4 bg-gray-100 rounded"
+                      {...props}
+                    />
+                  ),
+              }}
+            >
+              {data?.feels}
+            </ReactMarkdown>
+          </div>
         </div>
         {!isMine && (
           <button
