@@ -1,20 +1,28 @@
+import { Memoirs } from "../api/main";
 import ImgSkeleton from "../assets/imgskeleton";
 
 interface PropsType {
-  id: string;
+  data: Memoirs;
 }
 
-const Section = ({ id }: PropsType) => {
+const Section = ({ data }: PropsType) => {
   return (
-    <a href={`/detail/${id}`}>
+    <a href={`/detail/${data.id}`}>
       <div className="flex-col">
-        <ImgSkeleton />
+        {data.imageUrl ? (
+          <img
+            src={data.imageUrl}
+            className="w-[400px] h-[200px] object-cover"
+          />
+        ) : (
+          <ImgSkeleton />
+        )}
         <div className="flex-col bg-[#fff] text-[#000] py-5 gap-2.5 px-5 font-pretendard">
-          <p className="flex w-full text-body2">제목</p>
-          <p className="flex w-full text-body3">설명</p>
-          <div className="flex w-full text-body3 justify-between">
-            <p>지은이</p>
-            <p>날짜</p>
+          <p className="flex w-full text-body2">{data.title}</p>
+          <p className="flex w-full text-body3">{data.content}</p>
+          <div className="flex justify-between w-full text-body3">
+            <p>{data.author}</p>
+            <p>{data.published}</p>
           </div>
         </div>
       </div>

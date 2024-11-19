@@ -4,6 +4,7 @@ import Signup from "./auth/Signup";
 import Main from "./main/Main";
 import Detail from "./main/Detail";
 import Edit from "./main/Edit";
+import MyPage from "./My";
 
 const Router = () => {
   return (
@@ -14,6 +15,8 @@ const Router = () => {
         <Route path="/" element={<Main />} />
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/detail/:id/edit" element={<Edit />} />
+        <Route path="/write" element={<Edit />} />
+        <Route path="/mypage" element={<MyPage />} />
       </Routes>
     </BrowserRouter>
   );

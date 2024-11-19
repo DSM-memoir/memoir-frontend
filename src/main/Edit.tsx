@@ -1,12 +1,18 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import breaks from "remark-breaks";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { editMemoir, postMemoir } from "../api/write";
+import { getDetail } from "../api/details";
+import { useNavigate, useParams } from "react-router-dom";
+import { urlToBlob } from "../utils/urlToBlob";
 
 interface FormType {
   title: string;
-  img: string | ArrayBuffer | null;
+  image: File | null;
   content: string;
-  feeling: string;
+  feels: string;
+  published: boolean;
 }
 
 interface TabProps {
@@ -31,15 +37,51 @@ const Tab = ({ isActive, onClick, children }: TabProps) => (
 const Edit = () => {
   const [form, setForm] = useState<FormType>({
     title: "",
-    img: "",
+    image: null,
     content: "",
-    feeling: "",
+    feels: "",
+    published: false,
   });
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<"write" | "preview">("write");
   const [feelingTab, setFeelingTab] = useState<"write" | "preview">("write");
+  const mode = window.location.pathname === "/write" ? "write" : "edit";
+  const { id } = useParams();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const { data: formData } = useQuery({
+    queryKey: ["getForm"],
+    queryFn: () => getDetail(id as string),
+  });
+
+  const { mutate: post } = useMutation({
+    mutationKey: ["posting"],
+    mutationFn: () => postMemoir(form),
+    onSuccess: () => navigate("/"),
+  });
+
+  const { mutate: edit } = useMutation({
+    mutationKey: ["edit"],
+    mutationFn: () =>
+      editMemoir({
+        form: {
+          title: form.title,
+          content: form.content,
+          feels: form.feels,
+          image: form.image,
+        },
+        id: id as string,
+      }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["detail"],
+      });
+      navigate("/");
+    },
+  });
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -47,7 +89,7 @@ const Edit = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         const result = reader.result;
-        setForm({ ...form, img: result });
+        setForm({ ...form, image: file });
         setImagePreview(result as string);
       };
       reader.readAsDataURL(file);
@@ -56,14 +98,34 @@ const Edit = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Add your submit logic here
+    if (mode === "write") {
+      post();
+    } else if (mode === "edit") {
+      edit();
+    }
     console.log("Form submitted:", form);
   };
+
+  useEffect(() => {
+    if (id && formData) {
+      setForm({
+        title: formData.title,
+        image: null,
+        content: formData.content,
+        feels: formData.feels,
+        published: formData.published,
+      });
+      urlToBlob(formData.image_url).then((file) =>
+        setForm((form) => ({ ...form, image: file }))
+      );
+      setImagePreview(formData.image_url);
+    }
+  }, [formData]);
 
   return (
     <main className="flex flex-col items-center w-full min-h-screen gap-8 px-12 py-4 bg-white font-pretendard">
       <div className="flex items-center justify-between w-full max-w-6xl">
-        <h1 className="text-2xl font-bold">
+        <h1 className="font-bold text-body1">
           <a href="/" className="transition-colors hover:text-purple">
             메뫌
           </a>
@@ -104,7 +166,7 @@ const Edit = () => {
                 type="button"
                 onClick={() => {
                   setImagePreview(null);
-                  setForm({ ...form, img: null });
+                  setForm({ ...form, image: null });
                 }}
                 className="absolute p-2 text-white transition-opacity bg-red-500 rounded-full opacity-0 top-2 right-2 group-hover:opacity-100"
               >
@@ -179,15 +241,15 @@ const Edit = () => {
 
           {feelingTab === "write" ? (
             <textarea
-              value={form.feeling}
-              onChange={(e) => setForm({ ...form, feeling: e.target.value })}
+              value={form.feels}
+              onChange={(e) => setForm({ ...form, feels: e.target.value })}
               placeholder="감정을 입력하세요... (마크다운 문법을 지원합니다)"
               className="w-full min-h-[100px] p-4 border rounded-lg resize-none focus:outline-none focus:border-purple transition-colors font-normal"
             />
           ) : (
             <div className="w-full min-h-[100px] p-4 border rounded-lg prose max-w-none whitespace-pre-wrap">
               <ReactMarkdown remarkPlugins={[breaks]}>
-                {form.feeling || "감정이 입력되지 않았습니다."}
+                {form.feels || "감정이 입력되지 않았습니다."}
               </ReactMarkdown>
             </div>
           )}
